@@ -127,6 +127,17 @@ MobileShell.NavigationPanel {
         }
     }
 
+    // System tray icons: the mobile shell has no tray of its own, so the panel
+    // grows one here, between the rotation button's slot and the navigation
+    // buttons.
+    TrayIconsComponent {
+        id: trayIcons
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: Math.round(Kirigami.Units.gridUnit * 2 + Kirigami.Units.smallSpacing * 2)
+        height: Math.round(Kirigami.Units.iconSizes.smallMedium * 1.1)
+    }
+
     rightCornerAction: MobileShell.NavigationPanelAction {
         id: keyboardToggleAction
         visible: ShellSettings.Settings.alwaysShowKeyboardToggleOnNavigationPanel ||

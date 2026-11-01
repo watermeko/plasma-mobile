@@ -8,16 +8,24 @@ plasma_add_applet(org.kde.plasma.mobile.taskpanel
         qml/main.qml
         qml/NavigationPanelComponent.qml
         qml/GesturePanelComponent.qml
+        qml/TrayIconsComponent.qml
     CPP_SOURCES
         taskpanel.cpp
+        statusnotifierhost.cpp
 )
 
-target_link_libraries(org.kde.plasma.mobile.taskpanel PRIVATE
-                      Qt::Gui
-                      Qt::DBus
-                      Qt::Qml
-                      Qt::Quick
-                      Qt::Sensors
-                      Plasma::Plasma
-                      KF6::Screen
-                    )
+set(TASKPANEL_LIBRARIES
+    Qt::Gui
+    Qt::DBus
+    Qt::Qml
+    Qt::Quick
+    Qt::Sensors
+    Plasma::Plasma
+)
+
+# nothing in this applet uses KF6::Screen, so do not make it a hard requirement
+if(TARGET KF6::Screen)
+    list(APPEND TASKPANEL_LIBRARIES KF6::Screen)
+endif()
+
+target_link_libraries(org.kde.plasma.mobile.taskpanel PRIVATE ${TASKPANEL_LIBRARIES})
